@@ -11,9 +11,13 @@ const Card = styled.div`
   margin: 5px;
 `;
 
+const MemberPhoto = ({ name, photo }) => (
+  <img src={photo} alt={`Avatar for ${name}`} />
+);
+
 const Rsvp = ({ member_name, member_photo, group_name, group_city }) => (
   <Card>
-    <img src={member_photo} alt={`Avatar photo for ${member_name}`} />
+    <MemberPhoto name={member_name} photo={member_photo} />
     <strong>{member_name}</strong> will meetup with<br />
     <strong>{group_name}</strong>
     <br />in {group_city}
