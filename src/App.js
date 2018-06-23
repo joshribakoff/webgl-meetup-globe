@@ -6,6 +6,20 @@ import "./App.css";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
 
+const Sidebar = styled.div`
+  background: rgb(14, 40, 58);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  overflow: auto;
+  color: white;
+`;
+
+const Identifier = styled.span`
+  color: rgb(255, 186, 0);
+  font-wieight: bold;
+`
+
 const slidedown = keyframes`
   0% {
     opacity: 0;
@@ -15,7 +29,7 @@ const slidedown = keyframes`
   100% {
     opacity: 1;
     transform: translateY(0);
-    background: white;
+    background: transparent;
   }
 `;
 
@@ -28,6 +42,10 @@ const Card = styled.div`
 
 const MemberPhotoWrapper = styled.div`
   width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   text-align: center;
   img {
@@ -37,6 +55,10 @@ const MemberPhotoWrapper = styled.div`
   }
 `;
 
+const RsvpDetailsWrapper = styled.div`
+  line-height: 1.5;
+`;
+
 const MemberPhoto = ({ name, photo }) => (
   <MemberPhotoWrapper>
     {photo && <img src={photo} alt={`Avatar for ${name}`} />}
@@ -44,12 +66,11 @@ const MemberPhoto = ({ name, photo }) => (
 );
 
 const RsvpDetails = ({ name, group, city }) => (
-  <div>
-    <strong>{name}</strong> will meetup with<br />
-    <strong>{group}</strong>
-    <br />
-    in {city}
-  </div>
+  <RsvpDetailsWrapper>
+    <Identifier>{name}</Identifier> will meetup with<br />
+    <Identifier>{group}</Identifier><br />
+    in {city}.
+  </RsvpDetailsWrapper>
 );
 
 const Rsvp = ({ member_name, member_photo, group_name, group_city }) => (
@@ -84,7 +105,7 @@ class App extends Component {
 
   render() {
     return (
-      <React.Fragment>{this.state.rsvps.map(this.renderCard)}</React.Fragment>
+      <Sidebar>{this.state.rsvps.map(this.renderCard)}</Sidebar>
     );
   }
 }
