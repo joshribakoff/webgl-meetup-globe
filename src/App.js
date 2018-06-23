@@ -1,8 +1,23 @@
 import React, { Component } from "react";
 import { webSocket } from "rxjs/webSocket";
+import styled from "styled-components";
 import "./App.css";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
+
+const Card = styled.div`
+padding: 5px;
+margin: 5px;
+`
+
+// Todo - add avatar pic
+const Rsvp = ({ member_name, group_name, group_city }) => (
+  <Card>
+    <strong>{member_name}</strong> will meetup with<br />
+    <strong>{group_name}</strong>
+    <br />in {group_city}
+  </Card>
+);
 
 class App extends Component {
   state = { rsvps: [] };
@@ -12,8 +27,18 @@ class App extends Component {
   handleRsvp = rsvp =>
     this.setState(state => ({ rsvps: [...state.rsvps, rsvp] }));
 
+  renderCard = ({ member, group }) => (
+    <Rsvp
+      member_name={member.member_name}
+      group_name={group.group_name}
+      group_city={group.group_city}
+    />
+  );
+
   render() {
-    return <pre>{JSON.stringify(this.state.rsvps, null, 2)}</pre>;
+    return (
+      <React.Fragment>{this.state.rsvps.map(this.renderCard)}</React.Fragment>
+    );
   }
 }
 
