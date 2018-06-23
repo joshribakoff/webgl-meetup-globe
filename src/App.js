@@ -13,7 +13,7 @@ const Card = styled.div`
 
 const Rsvp = ({ member_name, member_photo, group_name, group_city }) => (
   <Card>
-    <img src={member_photo} />
+    <img src={member_photo} alt={`Avatar photo for ${member_name}`} />
     <strong>{member_name}</strong> will meetup with<br />
     <strong>{group_name}</strong>
     <br />in {group_city}
