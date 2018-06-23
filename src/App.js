@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
+import { webSocket } from 'rxjs/webSocket';
 import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  async componentDidMount() {
+    const subject = webSocket("ws://stream.meetup.com/2/rsvps");
+    subject.subscribe(
+      value => console.log(value)
+    );
+  }
+
   render() {
     return (
       <div className="App">
