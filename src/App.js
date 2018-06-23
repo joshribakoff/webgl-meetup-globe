@@ -104,7 +104,7 @@ class App extends Component {
 
   render() {
     return (
-      <Sidebar>{this.state.rsvps.map(this.renderCard)}</Sidebar>
+      <Sidebar>{this.state.rsvps.slice(0, 100).map(this.renderCard)}</Sidebar>
     );
   }
 }
