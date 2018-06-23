@@ -24,12 +24,10 @@ const slidedown = keyframes`
   0% {
     opacity: 0;
     transform: translateX(-50px);
-    background: purple;
   }
   100% {
     opacity: 1;
     transform: translateY(0);
-    background: transparent;
   }
 `;
 
@@ -57,6 +55,7 @@ const MemberPhotoWrapper = styled.div`
 
 const RsvpDetailsWrapper = styled.div`
   line-height: 1.5;
+  padding-left: 10px;
 `;
 
 const MemberPhoto = ({ name, photo }) => (
