@@ -25,7 +25,7 @@ class App extends Component {
   componentDidMount = () => webSocket(URL).subscribe(this.handleRsvp);
 
   handleRsvp = rsvp =>
-    this.setState(state => ({ rsvps: [...state.rsvps, rsvp] }));
+    this.setState(state => ({ rsvps: [rsvp, ...state.rsvps] }));
 
   renderCard = ({ member, group }) => (
     <Rsvp
