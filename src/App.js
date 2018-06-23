@@ -1,15 +1,29 @@
 import React, { Component } from "react";
 import { webSocket } from "rxjs/webSocket";
 import { map } from "rxjs/operators";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import "./App.css";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
+
+const slidedown = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+    background: purple;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    background: white;
+  }
+`;
 
 const Card = styled.div`
   padding: 5px;
   margin: 5px;
   display: flex;
+  animation: ${slidedown} 0.7s ease;
 `;
 
 const MemberPhotoWrapper = styled.div`
