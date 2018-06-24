@@ -2,67 +2,17 @@ import React, { Component } from "react";
 import { webSocket } from "rxjs/webSocket";
 import { of } from "rxjs";
 import { map, tap, catchError, switchMap } from "rxjs/operators";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { pure } from "recompose";
 import GlobeContainer, { Instance as globe } from "../containers/GlobeContainer";
+import Page from "../components/Page";
+import Sidebar from "../components/Sidebar";
+import IdentifierText from "../components/IdentifierText";
+import Card from "../components/Card";
+import MemberPhotoWrapper from "../components/MemberPhotoWrapper";
+import RsvpDetailsWrapper from "../components/RsvpDetailsWrapper";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
-
-const Page = styled.div`
-  background: rgb(14, 40, 58);
-  width: 100%;
-  height: 100vh;
-  display: flex;
-`;
-
-const Sidebar = styled.div`
-  overflow: auto;
-  color: white;
-  width: 400px;
-`;
-
-const Identifier = styled.span`
-  color: rgb(255, 186, 0);
-  font-wieight: bold;
-`;
-
-const slidedown = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const Card = styled.div`
-  padding: 5px;
-  margin: 5px;
-  display: flex;
-  animation: ${slidedown} 0.7s ease;
-`;
-
-const MemberPhotoWrapper = styled.div`
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  text-align: center;
-  img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-  }
-`;
-
-const RsvpDetailsWrapper = styled.div`
-  line-height: 1.5;
-  padding-left: 10px;
-`;
 
 const MemberPhoto = ({ name, photo }) => (
   <MemberPhotoWrapper>
@@ -72,8 +22,8 @@ const MemberPhoto = ({ name, photo }) => (
 
 const RsvpDetails = pure(({ name, group, city }) => (
   <RsvpDetailsWrapper>
-    <Identifier>{name}</Identifier> will meetup with<br />
-    <Identifier>{group}</Identifier>
+    <IdentifierText>{name}</IdentifierText> will meetup with<br />
+    <IdentifierText>{group}</IdentifierText>
     <br />
     in {city}.
   </RsvpDetailsWrapper>
