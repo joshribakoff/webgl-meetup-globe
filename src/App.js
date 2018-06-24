@@ -3,6 +3,7 @@ import { webSocket } from "rxjs/webSocket";
 import { of } from "rxjs";
 import { map, tap, catchError, switchMap } from "rxjs/operators";
 import styled, { keyframes } from "styled-components";
+import { pure } from "recompose";
 import "./App.css";
 import DAT from "./globe";
 
@@ -70,14 +71,14 @@ const MemberPhoto = ({ name, photo }) => (
   </MemberPhotoWrapper>
 );
 
-const RsvpDetails = ({ name, group, city }) => (
+const RsvpDetails = pure(({ name, group, city }) => (
   <RsvpDetailsWrapper>
     <Identifier>{name}</Identifier> will meetup with<br />
     <Identifier>{group}</Identifier>
     <br />
     in {city}.
   </RsvpDetailsWrapper>
-);
+));
 
 const Rsvp = ({ member_name, member_photo, group_name, group_city }) => (
   <Card>
@@ -92,6 +93,7 @@ class Globe extends Component {
   componentDidMount() {
     const container = document.getElementById("globe");
     globe = new DAT.Globe(container);
+    globe.animate();
   }
 
   shouldComponentUpdate = () => false;
@@ -129,11 +131,10 @@ class App extends Component {
       name: rsvp_id
     });
     globe.createPoints();
-    globe.animate();
   };
 
   handleRsvp = rsvp =>
-    this.setState(state => ({ rsvps: [rsvp, ...state.rsvps] }));
+    this.setState(state => ({ rsvps: [rsvp, ...state.rsvps.slice(0, 100)] }));
 
   renderCard = ({ id, member, group }) => (
     <Rsvp
@@ -148,7 +149,7 @@ class App extends Component {
   render() {
     return (
       <Page>
-        <Sidebar>{this.state.rsvps.slice(0, 100).map(this.renderCard)}</Sidebar>
+        <Sidebar>{this.state.rsvps.map(this.renderCard)}</Sidebar>
         <Globe />
       </Page>
     );
