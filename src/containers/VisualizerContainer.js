@@ -2,29 +2,19 @@ import React, { Component } from "react";
 import { webSocket } from "rxjs/webSocket";
 import { of } from "rxjs";
 import { map, tap, catchError, switchMap } from "rxjs/operators";
-import { pure } from "recompose";
 import { v4 as id } from "uuid";
 import GlobeContainer, { Instance as globe } from "../containers/GlobeContainer";
 import Page from "../components/Page";
 import Sidebar from "../components/Sidebar";
-import IdentifierText from "../components/IdentifierText";
 import Card from "../components/Card";
 import MemberPhotoWrapper from "../components/MemberPhotoWrapper";
 import RsvpDetailsWrapper from "../components/RsvpDetailsWrapper";
 import MemberPhoto from "../components/MemberPhoto";
+import RsvpDetails from "../components/RsvpDetails";
 
 const URL = "wss://stream.meetup.com/2/rsvps";
 
 const noOp = () => {};
-
-const RsvpDetails = pure(({ name, group, city }) => (
-  <RsvpDetailsWrapper>
-    <IdentifierText>{name}</IdentifierText> will meetup with<br />
-    <IdentifierText>{group}</IdentifierText>
-    <br />
-    in {city}.
-  </RsvpDetailsWrapper>
-));
 
 const Rsvp = ({ member_name, member_photo, group_name, group_city }) => (
   <Card>
