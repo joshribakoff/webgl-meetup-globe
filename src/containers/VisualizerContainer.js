@@ -12,7 +12,7 @@ import Card from "../components/Card";
 import MemberPhotoWrapper from "../components/MemberPhotoWrapper";
 import RsvpDetailsWrapper from "../components/RsvpDetailsWrapper";
 
-const URL = "ws://stream.meetup.com/2/rsvps";
+const URL = "wss://stream.meetup.com/2/rsvps";
 
 const noOp = () => {};
 
