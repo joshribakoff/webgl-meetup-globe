@@ -6,14 +6,9 @@ import styled, { keyframes } from "styled-components";
 import { pure } from "recompose";
 import GlobeContainer, { Instance as globe } from "../containers/GlobeContainer";
 import Page from "../components/Page";
+import Sidebar from "../components/Sidebar";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
-
-const Sidebar = styled.div`
-  overflow: auto;
-  color: white;
-  width: 400px;
-`;
 
 const Identifier = styled.span`
   color: rgb(255, 186, 0);
