@@ -1,8 +1,12 @@
 # Realtime WebGL Meetup.com Globe
 The goal of this project is to visualize live meetup.com RSVPs on an interactive webGL globe.
 
+# Demo
+View live demo here: https://joshribakoff.github.io/webgl-meetup-globe/
+
 ![screenshot](https://raw.githubusercontent.com/joshribakoff/webgl-meetup-globe/master/screenshot.png)
 
+# Description
 The React app consists of a split view, with cards animating into a list on a sidebar, and a live updated webGL globe using three.js. It uses rxJS streams to consume the meetup.com real time websockets API.
 
 # License
