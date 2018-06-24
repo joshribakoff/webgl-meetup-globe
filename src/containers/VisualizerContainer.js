@@ -7,13 +7,9 @@ import { pure } from "recompose";
 import GlobeContainer, { Instance as globe } from "../containers/GlobeContainer";
 import Page from "../components/Page";
 import Sidebar from "../components/Sidebar";
+import IdentifierText from "../components/IdentifierText";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
-
-const Identifier = styled.span`
-  color: rgb(255, 186, 0);
-  font-wieight: bold;
-`;
 
 const slidedown = keyframes`
   0% {
@@ -61,8 +57,8 @@ const MemberPhoto = ({ name, photo }) => (
 
 const RsvpDetails = pure(({ name, group, city }) => (
   <RsvpDetailsWrapper>
-    <Identifier>{name}</Identifier> will meetup with<br />
-    <Identifier>{group}</Identifier>
+    <IdentifierText>{name}</IdentifierText> will meetup with<br />
+    <IdentifierText>{group}</IdentifierText>
     <br />
     in {city}.
   </RsvpDetailsWrapper>
