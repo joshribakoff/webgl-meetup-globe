@@ -1,7 +1,8 @@
 {
-  "name": "my-app",
+  "name": "webgl-meetup-globe",
   "version": "0.1.0",
-  "private": true,
+  "license": "MIT",
+  "private": false,
   "dependencies": {
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -16,6 +17,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+    "eject": "react-scripts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.2.0"
+  },
+  "homepage": "http://joshribakoff.github.io/webgl-meetup-globe"
 }
