@@ -2,32 +2,15 @@ import React, { Component } from "react";
 import { webSocket } from "rxjs/webSocket";
 import { of } from "rxjs";
 import { map, tap, catchError, switchMap } from "rxjs/operators";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { pure } from "recompose";
 import GlobeContainer, { Instance as globe } from "../containers/GlobeContainer";
 import Page from "../components/Page";
 import Sidebar from "../components/Sidebar";
 import IdentifierText from "../components/IdentifierText";
+import Card from "../components/Card";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
-
-const slidedown = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const Card = styled.div`
-  padding: 5px;
-  margin: 5px;
-  display: flex;
-  animation: ${slidedown} 0.7s ease;
-`;
 
 const MemberPhotoWrapper = styled.div`
   width: 70px;
