@@ -2,6 +2,7 @@
 
 import * as THREE from "three";
 import world from "./world.jpg";
+import stars from "./star-field.png";
 
 /**
  * dat.globe Javascript WebGL Globe Toolkit
@@ -140,6 +141,16 @@ DAT.Globe = function(container, opts) {
     mesh = new THREE.Mesh(geometry, material);
     mesh.scale.set( 1.1, 1.1, 1.1 );
     scene.add(mesh);
+
+    //STARS
+    var starGeo = new THREE.SphereGeometry (3000, 10, 100),
+    starMat = new THREE.MeshBasicMaterial();
+    starMat.map = THREE.ImageUtils.loadTexture(stars);
+    starMat.side = THREE.BackSide;
+                
+    var starMesh = new THREE.Mesh(starGeo, starMat);
+                
+    scene.add(starMesh);
 
     geometry = new THREE.BoxGeometry(0.75, 0.75, 1);
     geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,-0.5));
