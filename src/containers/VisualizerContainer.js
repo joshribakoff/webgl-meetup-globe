@@ -11,16 +11,11 @@ import IdentifierText from "../components/IdentifierText";
 import Card from "../components/Card";
 import MemberPhotoWrapper from "../components/MemberPhotoWrapper";
 import RsvpDetailsWrapper from "../components/RsvpDetailsWrapper";
+import MemberPhoto from "../components/MemberPhoto";
 
 const URL = "wss://stream.meetup.com/2/rsvps";
 
 const noOp = () => {};
-
-const MemberPhoto = ({ name, photo }) => (
-  <MemberPhotoWrapper>
-    {photo && <img src={photo} alt={`Avatar for ${name}`} />}
-  </MemberPhotoWrapper>
-);
 
 const RsvpDetails = pure(({ name, group, city }) => (
   <RsvpDetailsWrapper>
