@@ -5,15 +5,9 @@ import { map, tap, catchError, switchMap } from "rxjs/operators";
 import styled, { keyframes } from "styled-components";
 import { pure } from "recompose";
 import GlobeContainer, { Instance as globe } from "../containers/GlobeContainer";
+import Page from "../components/Page";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
-
-const Page = styled.div`
-  background: rgb(14, 40, 58);
-  width: 100%;
-  height: 100vh;
-  display: flex;
-`;
 
 const Sidebar = styled.div`
   overflow: auto;
