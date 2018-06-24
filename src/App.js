@@ -3,22 +3,28 @@ import { webSocket } from "rxjs/webSocket";
 import { map } from "rxjs/operators";
 import styled, { keyframes } from "styled-components";
 import "./App.css";
+import DAT from "./globe";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
 
-const Sidebar = styled.div`
+
+const Page = styled.div`
   background: rgb(14, 40, 58);
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  position: fixed;
+  display: flex;
+`;
+
+const Sidebar = styled.div`
   overflow: auto;
   color: white;
+  width: 400px;
 `;
 
 const Identifier = styled.span`
   color: rgb(255, 186, 0);
   font-wieight: bold;
-`
+`;
 
 const slidedown = keyframes`
   0% {
@@ -67,7 +73,8 @@ const MemberPhoto = ({ name, photo }) => (
 const RsvpDetails = ({ name, group, city }) => (
   <RsvpDetailsWrapper>
     <Identifier>{name}</Identifier> will meetup with<br />
-    <Identifier>{group}</Identifier><br />
+    <Identifier>{group}</Identifier>
+    <br />
     in {city}.
   </RsvpDetailsWrapper>
 );
@@ -78,6 +85,21 @@ const Rsvp = ({ member_name, member_photo, group_name, group_city }) => (
     <RsvpDetails name={member_name} group={group_name} city={group_city} />
   </Card>
 );
+
+class Globe extends Component {
+  componentDidMount() {
+    const container = document.getElementById("globe");
+    const globe = new DAT.Globe(container);
+    //globe.createPoints();
+    globe.animate();
+  }
+
+  shouldComponentUpdate = () => false;
+
+  render() {
+    return <div id="globe" style={{ flexGrow: 1 }} />;
+  }
+}
 
 let id = 0;
 
@@ -104,7 +126,10 @@ class App extends Component {
 
   render() {
     return (
-      <Sidebar>{this.state.rsvps.slice(0, 100).map(this.renderCard)}</Sidebar>
+      <Page>
+        <Sidebar>{this.state.rsvps.slice(0, 100).map(this.renderCard)}</Sidebar>
+        <Globe />
+      </Page>
     );
   }
 }
