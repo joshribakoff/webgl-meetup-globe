@@ -1,8 +1,17 @@
 # webgl-meetup-globe
-The goal of this project is to visualize live meetup.com data on a webGL globe. The React app will consist of a split view, with cards animating into a list on a sidebar, and a live updated webGL globe. It will use rxJS streams to consume the API. Stretch goals will include allowing the user to filter the data using geofencing, keywords, etc.
+The goal of this project is to visualize live meetup.com data on a webGL globe.
 
-https://www.meetup.com/meetup_api/docs/stream/2/rsvps/
+![screenshot][screenshot]
 
-https://experiments.withgoogle.com/chrome/globe
+The React app consists of a split view, with cards animating into a list on a sidebar, and a live updated webGL globe. It uses rxJS streams to consume the meetup.com real time websockets API.
 
-https://github.com/ReactiveX/rxjs
+# todo
+Stretch goals will include allowing the user to filter the data using geofencing, keywords, etc.
+
+# useful links
+- https://www.meetup.com/meetup_api/docs/stream/2/rsvps/
+- https://experiments.withgoogle.com/chrome/globe
+- https://github.com/ReactiveX/rxjs
+
+
+[screenshot]: https://raw.githubusercontent.com/joshribakoff/webgl-meetup-globe/master/screenshot.png)
