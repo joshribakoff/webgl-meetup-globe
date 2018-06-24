@@ -1,15 +1,5 @@
-import styled, { keyframes } from "styled-components";
-
-const slidedown = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
+import styled from "styled-components";
+import slidedown from "../helpers/keyframes";
 
 const Card = styled.div`
   padding: 5px;
