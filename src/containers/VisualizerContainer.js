@@ -10,13 +10,9 @@ import Sidebar from "../components/Sidebar";
 import IdentifierText from "../components/IdentifierText";
 import Card from "../components/Card";
 import MemberPhotoWrapper from "../components/MemberPhotoWrapper";
+import RsvpDetailsWrapper from "../components/RsvpDetailsWrapper";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
-
-const RsvpDetailsWrapper = styled.div`
-  line-height: 1.5;
-  padding-left: 10px;
-`;
 
 const MemberPhoto = ({ name, photo }) => (
   <MemberPhotoWrapper>
