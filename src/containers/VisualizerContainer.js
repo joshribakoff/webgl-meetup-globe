@@ -6,8 +6,6 @@ import { v4 as id } from "uuid";
 import GlobeContainer, { Instance as globe } from "../containers/GlobeContainer";
 import Page from "../components/Page";
 import Sidebar from "../components/Sidebar";
-import MemberPhotoWrapper from "../components/MemberPhotoWrapper";
-import RsvpDetailsWrapper from "../components/RsvpDetailsWrapper";
 import Rsvp from "../components/Rsvp";
 
 const URL = "wss://stream.meetup.com/2/rsvps";
