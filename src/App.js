@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { webSocket } from "rxjs/webSocket";
-import { map } from "rxjs/operators";
+import { of } from "rxjs";
+import { map, tap, catchError, switchMap } from "rxjs/operators";
 import styled, { keyframes } from "styled-components";
 import "./App.css";
 import DAT from "./globe";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
-
 
 const Page = styled.div`
   background: rgb(14, 40, 58);
@@ -86,12 +86,12 @@ const Rsvp = ({ member_name, member_photo, group_name, group_city }) => (
   </Card>
 );
 
+let globe;
+
 class Globe extends Component {
   componentDidMount() {
     const container = document.getElementById("globe");
-    const globe = new DAT.Globe(container);
-    //globe.createPoints();
-    globe.animate();
+    globe = new DAT.Globe(container);
   }
 
   shouldComponentUpdate = () => false;
@@ -109,7 +109,28 @@ class App extends Component {
   componentDidMount = () =>
     webSocket(URL)
       .pipe(map(rsvp => ({ ...rsvp, id: id++ })))
+      .pipe(tap(console.log))
+      // It can fail if `rsvp.venue` is missing,
+      // so I dispose failed observables and then
+      // switch to a new observable.
+      .pipe(
+        switchMap(rsvp =>
+          of(rsvp)
+            .pipe(tap(this.plot))
+            .pipe(catchError(() => {}))
+        )
+      )
       .subscribe(this.handleRsvp);
+
+  plot = ({ venue, guests, rsvp_id }) => {
+    const magnitude = guests === 0 ? 0.1 : guests / 10 + 0.1;
+    globe.addData([venue.lat, venue.lon, magnitude], {
+      format: "magnitude",
+      name: rsvp_id
+    });
+    globe.createPoints();
+    globe.animate();
+  };
 
   handleRsvp = rsvp =>
     this.setState(state => ({ rsvps: [rsvp, ...state.rsvps] }));
