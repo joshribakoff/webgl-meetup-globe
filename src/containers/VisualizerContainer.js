@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { webSocket } from "rxjs/webSocket";
 import { of } from "rxjs";
 import { map, tap, catchError, switchMap } from "rxjs/operators";
-import styled from "styled-components";
 import { pure } from "recompose";
+import { v4 as id } from "uuid";
 import GlobeContainer, { Instance as globe } from "../containers/GlobeContainer";
 import Page from "../components/Page";
 import Sidebar from "../components/Sidebar";
@@ -13,6 +13,8 @@ import MemberPhotoWrapper from "../components/MemberPhotoWrapper";
 import RsvpDetailsWrapper from "../components/RsvpDetailsWrapper";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
+
+const noOp = () => {};
 
 const MemberPhoto = ({ name, photo }) => (
   <MemberPhotoWrapper>
@@ -36,28 +38,18 @@ const Rsvp = ({ member_name, member_photo, group_name, group_city }) => (
   </Card>
 );
 
-let id = 0;
-
 class VisualizerContainer extends Component {
   state = { rsvps: [] };
 
   componentDidMount = () =>
     webSocket(URL)
-      .pipe(map(rsvp => ({ ...rsvp, id: id++ })))
-      // .pipe(tap(console.log))
+      .pipe(map(rsvp => ({ ...rsvp, id: id() })))
       .pipe(tap(this.handleRsvp))
-      // It can fail if `rsvp.venue` is missing,
-      // or it the globe.api is not initialized yet.
-      // Therefore, I dispose failed observables and
-      // then switch to a new observable.
-      .pipe(
-        switchMap(rsvp =>
-          of(rsvp)
-            .pipe(tap(this.plot))
-            .pipe(catchError(() => {}))
-        )
-      )
+      .pipe(this.tryPlot)
       .subscribe();
+
+  // It may fail if `rsvp.venue` is missing or `globe.api` is not initialized.
+  tryPlot = switchMap(rsvp => of(rsvp).pipe(tap(this.plot)).pipe(catchError(noOp)));
 
   plot = ({ venue, guests, rsvp_id }) => {
     const magnitude = guests === 0 ? 0.1 : guests / 10 + 0.1;
