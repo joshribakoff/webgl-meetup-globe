@@ -5,7 +5,7 @@ import { map, tap, catchError, switchMap } from "rxjs/operators";
 import styled, { keyframes } from "styled-components";
 import { pure } from "recompose";
 import "./App.css";
-import DAT from "./globe";
+import DAT from "./lib/globe";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
 
