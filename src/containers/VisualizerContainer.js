@@ -4,7 +4,7 @@ import { of } from "rxjs";
 import { map, tap, catchError, switchMap } from "rxjs/operators";
 import styled, { keyframes } from "styled-components";
 import { pure } from "recompose";
-import DAT from "../lib/globe";
+import GlobeContainer, { Instance as globe } from "../containers/GlobeContainer";
 
 const URL = "ws://stream.meetup.com/2/rsvps";
 
@@ -86,22 +86,6 @@ const Rsvp = ({ member_name, member_photo, group_name, group_city }) => (
   </Card>
 );
 
-let globe;
-
-class Globe extends Component {
-  componentDidMount() {
-    const container = document.getElementById("globe");
-    globe = new DAT.Globe(container);
-    globe.animate();
-  }
-
-  shouldComponentUpdate = () => false;
-
-  render() {
-    return <div id="globe" style={{ flexGrow: 1 }} />;
-  }
-}
-
 let id = 0;
 
 class VisualizerContainer extends Component {
@@ -110,10 +94,12 @@ class VisualizerContainer extends Component {
   componentDidMount = () =>
     webSocket(URL)
       .pipe(map(rsvp => ({ ...rsvp, id: id++ })))
-      .pipe(tap(console.log))
+      // .pipe(tap(console.log))
+      .pipe(tap(this.handleRsvp))
       // It can fail if `rsvp.venue` is missing,
-      // so I dispose failed observables and then
-      // switch to a new observable.
+      // or it the globe.api is not initialized yet.
+      // Therefore, I dispose failed observables and
+      // then switch to a new observable.
       .pipe(
         switchMap(rsvp =>
           of(rsvp)
@@ -121,15 +107,15 @@ class VisualizerContainer extends Component {
             .pipe(catchError(() => {}))
         )
       )
-      .subscribe(this.handleRsvp);
+      .subscribe();
 
   plot = ({ venue, guests, rsvp_id }) => {
     const magnitude = guests === 0 ? 0.1 : guests / 10 + 0.1;
-    globe.addData([venue.lat, venue.lon, magnitude], {
+    globe.api.addData([venue.lat, venue.lon, magnitude], {
       format: "magnitude",
       name: rsvp_id
     });
-    globe.createPoints();
+    globe.api.createPoints();
   };
 
   handleRsvp = rsvp =>
@@ -149,7 +135,7 @@ class VisualizerContainer extends Component {
     return (
       <Page>
         <Sidebar>{this.state.rsvps.map(this.renderCard)}</Sidebar>
-        <Globe />
+        <GlobeContainer />
       </Page>
     );
   }
